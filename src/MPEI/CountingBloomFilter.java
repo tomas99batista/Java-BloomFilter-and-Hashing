@@ -33,7 +33,7 @@ public class CountingBloomFilter {
 		// Can't add if the BloomFilter is full
 		if (countElements >= m) {
 			System.out.println("Not possible to add, Counting Bloom Filter is full");
-			System.exit(0);
+			Runtime.getRuntime().exit(0);
 		} else {
 			for (int i = 0; i < k; i++) {
 				Input += Integer.toString(i);
@@ -44,17 +44,17 @@ public class CountingBloomFilter {
 	}
 
 	// Remove one occurrence on the element passed by argument on the CBF
-	public void removeOccurence(String Input) {
+	public void removeOccurence(String element) {
 		// Can't remove if the BloomFilter is empty
 		if (countElements <= 0) {
 			System.out.println("Not possible to remove, Counting Bloom Filter is empty");
-			System.exit(0);
+			Runtime.getRuntime().exit(0);
 		} else {
 			for (int i = 0; i < k; i++) {
-				Input += Integer.toString(i);
+				element += Integer.toString(i);
 				// Verify if it is not at zero
-				if (countingBloomFilter[Input.hashCode() % m] > 0) {
-					countingBloomFilter[Input.hashCode() % m] -= 1;
+				if (countingBloomFilter[element.hashCode() % m] > 0) {
+					countingBloomFilter[element.hashCode() % m] -= 1;
 				}
 			}
 		}
@@ -62,15 +62,15 @@ public class CountingBloomFilter {
 	}
 
 	// Remove the Element passed by argument on the BloomFilter
-	public void removeElement(String Input) {
+	public void removeElement(String element) {
 		// Can't remove if the BloomFilter is empty
 		if (countElements <= 0) {
 			System.out.println("Not possible to remove, Counting Bloom Filter is empty");
-			System.exit(0);
+			Runtime.getRuntime().exit(0);
 		} else {
 			for (int i = 0; i < k; i++) {
-				Input += Integer.toString(i);
-				countingBloomFilter[Input.hashCode() % m] = 0;
+				element += Integer.toString(i);
+				countingBloomFilter[element.hashCode() % m] = 0;
 			}
 		}
 		countElements--;
@@ -78,6 +78,10 @@ public class CountingBloomFilter {
 
 	// Tests if the Bloom Filter contains the argument passed to the function
 	public void contains(String Input) {
+		if (countElements <= 0) {
+			System.out.println("Counting Bloom Filter it is empty");
+			Runtime.getRuntime().exit(0);
+		}
 		int verification = 1;
 		for (int i = 0; i < k; i++) {
 			Input += Integer.toString(i);
