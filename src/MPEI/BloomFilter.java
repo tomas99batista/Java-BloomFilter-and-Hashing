@@ -1,9 +1,12 @@
+package MPEI;
+
 import java.util.*;
 import java.lang.Math;
 
-public class CountingBloomFilter {
+public class BloomFilter {
+
 	// Things needed
-	private int[] countingBloomFilter; // The bloom filter itself
+	private int[] bloomFilter; // The bloom filter itself
 	private int k; // Num of hash functions
 	private int m; // Number of bits in the filter
 	private int n; // Number of elements in the Filters
@@ -19,10 +22,10 @@ public class CountingBloomFilter {
 	// -------------------------------------------------
 
 	// Creates the BloomFilter with optimal m and k
-	public CountingBloomFilter(int n) {
+	public BloomFilter(int n) {
 		this.n = n;
 		m = (int) ((n * Math.log(fpr)) / Math.log(1 / Math.pow(2, Math.log(2))));
-		countingBloomFilter = new int[m];
+		bloomFilter = new int[m];
 		k = (int) ((m / n) * Math.log(2));
 	}
 
@@ -31,7 +34,7 @@ public class CountingBloomFilter {
 		for (int i = 0; i < k; i++) {
 			// TODO
 			// member_i = [member_i num2str(i)];
-			countingBloomFilter[Input.hashCode() % m] = 1;
+			bloomFilter[Input.hashCode() % m] = 1;
 		}
 		countElements++; // Give the number of elements added *might be useful....or not*
 	}
@@ -39,7 +42,6 @@ public class CountingBloomFilter {
 	// TODO
 	// Tests if the Bloom Filter contains the argument passed to the function
 	public void contains(String Input) {
-		
 	}
 
 	// Give the number of elements added *might be useful....or not*
@@ -52,11 +54,13 @@ public class CountingBloomFilter {
 		return Math.pow(1 - Math.exp(-k / (m / n)), k);
 	}
 
+	// TODO
+	// FiX tHiS pRiNt
 	@Override
 	public String toString() {
-		return "CountingBloomFilter [countingBloomFilter=" + Arrays.toString(countingBloomFilter) + ", k=" + k + ", m="
-				+ m + ", n=" + n + ", fpr=" + fpr + ", countElements=" + countElements + ", FalsePositiveProbb()="
-				+ FalsePositiveProbb() + "]";
+		return "BloomFilter [bloomFilter=" + Arrays.toString(bloomFilter) + ", k=" + k + ", m=" + m + ", n=" + n
+				+ ", fpr=" + fpr + ", countElements=" + countElements + ", FalsePositiveProbb()=" + FalsePositiveProbb()
+				+ "]";
 	}
 
 	public static void main(String[] args) {
