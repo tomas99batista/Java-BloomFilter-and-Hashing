@@ -30,21 +30,69 @@ public class CountingBloomFilter {
 
 	// Insert the passed arguments on the BloomFilter
 	public void insert(String Input) {
-		for (int i = 0; i < k; i++) {
-			// TODO
-			// member_i = [member_i num2str(i)];
-			countingBloomFilter[Input.hashCode() % m] = 1;
+		// Can't add if the BloomFilter is full
+		if (countElements >= m) {
+			System.out.println("Not possible to add, Counting Bloom Filter is full");
+			System.exit(0);
+		} else {
+			for (int i = 0; i < k; i++) {
+				Input += Integer.toString(i);
+				countingBloomFilter[Input.hashCode() % m] += 1;
+			}
+			countElements++;
 		}
-		countElements++; // Give the number of elements added *might be useful....or not*
 	}
 
-	// TODO
+	// Remove one occurrence on the element passed by argument on the CBF
+	public void removeOccurence(String Input) {
+		// Can't remove if the BloomFilter is empty
+		if (countElements <= 0) {
+			System.out.println("Not possible to remove, Counting Bloom Filter is empty");
+			System.exit(0);
+		} else {
+			for (int i = 0; i < k; i++) {
+				Input += Integer.toString(i);
+				// Verify if it is not at zero
+				if (countingBloomFilter[Input.hashCode() % m] > 0) {
+					countingBloomFilter[Input.hashCode() % m] -= 1;
+				}
+			}
+		}
+		countElements--;
+	}
+
+	// Remove the Element passed by argument on the BloomFilter
+	public void removeElement(String Input) {
+		// Can't remove if the BloomFilter is empty
+		if (countElements <= 0) {
+			System.out.println("Not possible to remove, Counting Bloom Filter is empty");
+			System.exit(0);
+		} else {
+			for (int i = 0; i < k; i++) {
+				Input += Integer.toString(i);
+				countingBloomFilter[Input.hashCode() % m] = 0;
+			}
+		}
+		countElements--;
+	}
+
 	// Tests if the Bloom Filter contains the argument passed to the function
 	public void contains(String Input) {
-		
+		int verification = 1;
+		for (int i = 0; i < k; i++) {
+			Input += Integer.toString(i);
+			if (countingBloomFilter[Input.hashCode() % m] == 0) {
+				verification = 0;
+				System.out.format("The Counting Bloom Filter does not contain %s", Input);
+				System.exit(1);
+			}
+		}
+		if (verification == 1) {
+			System.out.format("The Counting Bloom Filter contains %s", Input);
+		}
 	}
 
-	// Give the number of elements added *might be useful....or not*
+	// Give the number of elements added
 	public int NumOfElements() {
 		return countElements;
 	}
@@ -64,5 +112,4 @@ public class CountingBloomFilter {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 	}
-
 }
