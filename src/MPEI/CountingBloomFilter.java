@@ -1,7 +1,6 @@
 package MPEI;
 
 import java.util.*;
-import java.lang.Math;
 
 public class CountingBloomFilter {
 	// Things needed
@@ -29,32 +28,32 @@ public class CountingBloomFilter {
 	}
 
 	// Insert the passed arguments on the BloomFilter
-	public void insert(String Input) {
+	public void insert(String element_Insert) {
 		// Can't add if the BloomFilter is full
 		if (countElements >= m) {
 			System.out.println("Not possible to add, Counting Bloom Filter is full");
-			Runtime.getRuntime().exit(0);
+			System.exit(0);
 		} else {
 			for (int i = 0; i < k; i++) {
-				Input += Integer.toString(i);
-				countingBloomFilter[Input.hashCode() % m] += 1;
+				element_Insert += Integer.toString(i);
+				countingBloomFilter[element_Insert.hashCode() % m] += 1;
 			}
 			countElements++;
 		}
 	}
 
 	// Remove one occurrence on the element passed by argument on the CBF
-	public void removeOccurence(String element) {
+	public void removeOccurence(String element_RemoveOcc) {
 		// Can't remove if the BloomFilter is empty
 		if (countElements <= 0) {
 			System.out.println("Not possible to remove, Counting Bloom Filter is empty");
-			Runtime.getRuntime().exit(0);
+			System.exit(0);
 		} else {
 			for (int i = 0; i < k; i++) {
-				element += Integer.toString(i);
+				element_RemoveOcc += Integer.toString(i);
 				// Verify if it is not at zero
-				if (countingBloomFilter[element.hashCode() % m] > 0) {
-					countingBloomFilter[element.hashCode() % m] -= 1;
+				if (countingBloomFilter[element_RemoveOcc.hashCode() % m] > 0) {
+					countingBloomFilter[element_RemoveOcc.hashCode() % m] -= 1;
 				}
 			}
 		}
@@ -62,37 +61,37 @@ public class CountingBloomFilter {
 	}
 
 	// Remove the Element passed by argument on the BloomFilter
-	public void removeElement(String element) {
+	public void removeElement(String element_Remove_Element) {
 		// Can't remove if the BloomFilter is empty
 		if (countElements <= 0) {
 			System.out.println("Not possible to remove, Counting Bloom Filter is empty");
-			Runtime.getRuntime().exit(0);
+			System.exit(0);
 		} else {
 			for (int i = 0; i < k; i++) {
-				element += Integer.toString(i);
-				countingBloomFilter[element.hashCode() % m] = 0;
+				element_Remove_Element += Integer.toString(i);
+				countingBloomFilter[element_Remove_Element.hashCode() % m] = 0;
 			}
 		}
 		countElements--;
 	}
 
 	// Tests if the Bloom Filter contains the argument passed to the function
-	public void contains(String Input) {
+	public void contains(String element_Contains) {
 		if (countElements <= 0) {
 			System.out.println("Counting Bloom Filter it is empty");
-			Runtime.getRuntime().exit(0);
+			System.exit(0);
 		}
 		int verification = 1;
 		for (int i = 0; i < k; i++) {
-			Input += Integer.toString(i);
-			if (countingBloomFilter[Input.hashCode() % m] == 0) {
+			element_Contains += Integer.toString(i);
+			if (countingBloomFilter[element_Contains.hashCode() % m] == 0) {
 				verification = 0;
-				System.out.format("The Counting Bloom Filter does not contain %s", Input);
+				System.out.format("The Counting Bloom Filter does not contain %s", element_Contains);
 				System.exit(1);
 			}
 		}
 		if (verification == 1) {
-			System.out.format("The Counting Bloom Filter contains %s", Input);
+			System.out.format("The Counting Bloom Filter contains %s", element_Contains);
 		}
 	}
 
