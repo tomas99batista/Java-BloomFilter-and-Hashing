@@ -1,6 +1,4 @@
-package MPEI;
-
-import java.util.*;
+package project;
 
 public class CountingBloomFilter {
 	// Things needed
@@ -11,6 +9,9 @@ public class CountingBloomFilter {
 	private double fpr; // Probability of false positives
 	private int countElements; // Count the num of elements
 
+	//TODO:
+	//fpr necessario definir?
+	
 	// -------------------------------------------------
 	// CREDITS: https://hur.st/bloomfilter/
 	// n = ceil(m / (-k / log(1 - exp(log(p) / k))))
@@ -95,6 +96,31 @@ public class CountingBloomFilter {
 		}
 	}
 
+	//NOT SURE ABOUT THIS ONE
+	// Tests if the Bloom Filter contains the argument passed to the function
+	public void numOccurences(String element_numOccurences) {
+		if (countElements <= 0) {
+			System.out.println("Counting Bloom Filter it is empty");
+			System.exit(0);
+		}
+		int verification = 1;
+		int occurences = 0;
+		for (int i = 0; i < k; i++) {
+			element_numOccurences += Integer.toString(i);
+			if (countingBloomFilter[element_numOccurences.hashCode() % m] == 0) {
+				verification = 0;
+				System.out.format("The Counting Bloom Filter does not contain %s", element_numOccurences);
+				System.exit(1);
+			} else {
+				//NOT SURE ABOUT THIS VVVV
+				occurences += 1;
+			}
+		}
+		if (verification == 1) {
+			System.out.format("The Counting Bloom Filter contains %s %d times", element_numOccurences, occurences);
+		}
+	}
+
 	// Give the number of elements added
 	public int NumOfElements() {
 		return countElements;
@@ -105,14 +131,4 @@ public class CountingBloomFilter {
 		return Math.pow(1 - Math.exp(-k / (m / n)), k);
 	}
 
-	@Override
-	public String toString() {
-		return "CountingBloomFilter [countingBloomFilter=" + Arrays.toString(countingBloomFilter) + ", k=" + k + ", m="
-				+ m + ", n=" + n + ", fpr=" + fpr + ", countElements=" + countElements + ", FalsePositiveProbb()="
-				+ FalsePositiveProbb() + "]";
-	}
-
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-	}
 }
