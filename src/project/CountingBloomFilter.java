@@ -1,6 +1,9 @@
 package project;
 
 public class CountingBloomFilter {
+	// TODO:
+	// Add clean countingBloomFilter (set all to 0's)
+
 	// Things needed
 	private int[] countingBloomFilter; // The bloom filter itself
 	private int k; // Number of hash functions
@@ -22,7 +25,7 @@ public class CountingBloomFilter {
 		this.n = n;
 		this.fpr = fpr;
 		m = (int) ((n * Math.log(fpr)) / Math.log(1 / Math.pow(2, Math.log(2))));
-		k = (int) ((m / n) * Math.log(2));		
+		k = (int) ((m / n) * Math.log(2));
 		countingBloomFilter = new int[m];
 	}
 

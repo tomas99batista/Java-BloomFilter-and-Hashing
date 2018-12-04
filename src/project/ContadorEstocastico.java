@@ -2,6 +2,9 @@ package project;
 
 public class ContadorEstocastico {
 
+	//TODO:
+	//Add clean ContadorEstocastico (Probability and the counter itself reset to 0)
+	
 	// Things needed
 	private int countElements;
 	private double randNumber;
