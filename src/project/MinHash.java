@@ -1,5 +1,7 @@
 package project;
 
+import java.util.*;
+
 public class MinHash {
 
 	// Things needed
@@ -8,16 +10,22 @@ public class MinHash {
 	private int n; // Number of elements in the Filters
 	private double threshold; // Probability of false positives
 	private int countElements; // Count the number of elements
-	private int prime; // Prime number that will be incremented
+	//private int prime; // Prime number that will be incremented
+	private int[] hashfunctions;
+	private int[][] minhash_matrix;
+	private int numCols;
 
-	public MinHash() {
-		// TODO Auto-generated constructor stub
+	public MinHash(int k, int primeNum, int numCols) {
+		this.k = k;
+		this.primeNum = primeNum;
+		this.hashfunctions = createRandomHashFunctions();
+		this.minhash_matrix = new int[k][numCols];
+		minhash_matrix[0][0] = 1;
+		System.out.println(minhash_matrix[0][0]);
 	}
 	
 	public void insertMinHash(String iputInserMH) {
 		//Calculate the MinHash to insert on the table
-
-
 /*
     filmes = Set{u};
     for i=1:nhf
@@ -32,6 +40,15 @@ public class MinHash {
     end
 */
 
+	}
+
+	public int[] createRandomHashFunctions() {
+		hashfunctions = new int[k];
+		for(int i=0; i<k; i++){
+			hashfunctions[i] = (int)(Math.random() * primeNum);
+			//System.out.println(hashfunctions[i]);
+		}
+		return hashfunctions;
 	}
 
 	public void distancesMinHash(String inputDistances) {
@@ -58,5 +75,21 @@ end
 		// passwords on the most XXXX common passwords which represents %%%%%. Do an if
 		// which says staying in this part of the percentage might be bad or good.
 		// Investigate this last part
+
+		/*
+		SimilarUsers= zeros(1,num_pairs);
+
+k= 1;
+    for n1= 1:Nu
+        for n2= n1+1:Nu
+            if dist_matrix(n1,n2) < threshold
+                SimilarUsers(k,:)= [n1 n2 dist_matrix(n1,n2)];
+                k= k+1;
+            end
+        end
+    end
+    
+end
+*/
 	}
 }
