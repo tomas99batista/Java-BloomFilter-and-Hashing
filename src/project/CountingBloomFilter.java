@@ -3,15 +3,12 @@ package project;
 public class CountingBloomFilter {
 	// Things needed
 	private int[] countingBloomFilter; // The bloom filter itself
-	private int k; // Num of hash functions
+	private int k; // Number of hash functions
 	private int m; // Number of bits in the filter
 	private int n; // Number of elements in the Filters
 	private double fpr; // Probability of false positives
-	private int countElements; // Count the num of elements
+	private int countElements; // Count the number of elements
 
-	//TODO:
-	//fpr necessario definir?
-	
 	// -------------------------------------------------
 	// CREDITS: https://hur.st/bloomfilter/
 	// n = ceil(m / (-k / log(1 - exp(log(p) / k))))
@@ -21,11 +18,12 @@ public class CountingBloomFilter {
 	// -------------------------------------------------
 
 	// Creates the BloomFilter with optimal m and k
-	public CountingBloomFilter(int n) {
+	public CountingBloomFilter(int n, double fpr) {
 		this.n = n;
+		this.fpr = fpr;
 		m = (int) ((n * Math.log(fpr)) / Math.log(1 / Math.pow(2, Math.log(2))));
+		k = (int) ((m / n) * Math.log(2));		
 		countingBloomFilter = new int[m];
-		k = (int) ((m / n) * Math.log(2));
 	}
 
 	// Insert the passed arguments on the BloomFilter
@@ -96,7 +94,7 @@ public class CountingBloomFilter {
 		}
 	}
 
-	//NOT SURE ABOUT THIS ONE
+	// NOT SURE ABOUT THIS ONE
 	// Tests if the Bloom Filter contains the argument passed to the function
 	public void numOccurences(String element_numOccurences) {
 		if (countElements <= 0) {
@@ -112,7 +110,7 @@ public class CountingBloomFilter {
 				System.out.format("The Counting Bloom Filter does not contain %s", element_numOccurences);
 				System.exit(1);
 			} else {
-				//NOT SURE ABOUT THIS VVVV
+				// NOT SURE ABOUT THIS VVVV
 				occurences += 1;
 			}
 		}
@@ -122,13 +120,7 @@ public class CountingBloomFilter {
 	}
 
 	// Give the number of elements added
-	public int NumOfElements() {
+	public int numOfElements() {
 		return countElements;
 	}
-
-	// Give the probability of false positive
-	public double FalsePositiveProbb() {
-		return Math.pow(1 - Math.exp(-k / (m / n)), k);
-	}
-
 }
