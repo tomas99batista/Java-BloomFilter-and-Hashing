@@ -6,10 +6,10 @@ public class ContadorEstocastico {
 	//Add clean ContadorEstocastico (Probability and the counter itself reset to 0)
 	
 	// Things needed
-	private int countElements;
-	private double randNumber;
-	private double probability;
-	private int elementsAdded;
+	private static int countElements;
+	private static double randNumber;
+	private static double probability;
+	private static int elementsAdded;
 
 	// Defines the stochastic counter with a probability
 	public ContadorEstocastico(double probability) {
@@ -17,16 +17,16 @@ public class ContadorEstocastico {
 	}
 
 	// This will increment the count
-	public void increment() {
+	public static void increment() {
 		randNumber = Math.random();
 		if (randNumber < probability) {
-			countElements++;
+			countElements++;		
 		}
 	}
 
 	// This will return the number of elements
-	public void numOfElements() {
+	public static void numOfElements() {
 		elementsAdded = (int) Math.round(countElements / probability);
-		System.out.format("%d elements were added", elementsAdded);
+		System.out.format("%d elements were added *Contador Estocastico*\n", elementsAdded);
 	}
 }
