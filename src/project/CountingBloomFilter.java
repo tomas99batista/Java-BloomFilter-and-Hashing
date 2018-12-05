@@ -1,8 +1,7 @@
 package project;
 
 public class CountingBloomFilter {
-	// TODO:
-	// Add clean countingBloomFilter (set all to 0's)
+	// TODO cleanCountingBF()
 
 	// Things needed
 	private int[] countingBloomFilter; // The bloom filter itself
@@ -125,5 +124,10 @@ public class CountingBloomFilter {
 	// Give the number of elements added
 	public int numOfElements() {
 		return countElements;
+	}
+
+	// TODO
+	// Clean the CountingBloomFilter
+	public void cleanCountingBF() {
 	}
 }

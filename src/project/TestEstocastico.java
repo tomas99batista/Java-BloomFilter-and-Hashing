@@ -18,9 +18,12 @@ public class TestEstocastico {
 		int count = 0;
 		while (input.hasNext()) {
 			String word = input.next();
+			// Increment the ContadorEstocastico and the count
 			ContadorEstocastico.increment();
 			count = count + 1;
 		}
+		// Print the number of elements added to the ContadorEstocastico and the total
+		// number of elements
 		ContadorEstocastico.numOfElements();
 		System.out.println("Word count: " + count);
 	}
