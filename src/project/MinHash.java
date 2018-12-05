@@ -20,26 +20,27 @@ public class MinHash {
 		this.primeNum = primeNum;
 		this.hashfunctions = createRandomHashFunctions();
 		this.minhash_matrix = new int[k][numCols];
-		minhash_matrix[0][0] = 1;
-		System.out.println(minhash_matrix[0][0]);
 	}
 	
-	public void insertMinHash(String iputInserMH) {
+	public void insertMinHash(int col, ArrayList<Integer> itemlist) {
 		//Calculate the MinHash to insert on the table
-/*
-    filmes = Set{u};
-    for i=1:nhf
-        minimo = hash_function(filmes(1),i,randlist,p);
-        for t=2:countElements
-            temp = hash_function(filmes(t),i,randlist,p);
-            if temp < minimo
-                minimo = temp;
-            end
-        end
-        minhash_matrix(i,u) = minimo;
-    end
-*/
+		for(int i=0; i<k; i++){
+			int minimo = hashFunction(itemlist.get(0), i);
+			for (int j=1; j < itemlist.size(); j++) {
+				int temp = hashFunction(itemlist.get(j), i);
+				if(temp < minimo)
+					minimo = temp;
+			}
+			minhash_matrix[i][col-1] = minimo;
+		}
+		for(int i=0; i<k; i++){
+			System.out.println(minhash_matrix[i][col-1]);
+		}
+	}
 
+	public int hashFunction(int item, int hash_num){
+		int hash = hashfunctions[hash_num]*item % primeNum;
+		return hash;
 	}
 
 	public int[] createRandomHashFunctions() {
