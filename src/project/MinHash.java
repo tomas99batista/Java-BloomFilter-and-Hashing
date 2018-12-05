@@ -13,13 +13,16 @@ public class MinHash {
 	//private int prime; // Prime number that will be incremented
 	private int[] hashfunctions;
 	private int[][] minhash_matrix;
+	private double[][] distance_matrix;
 	private int numCols;
 
 	public MinHash(int k, int primeNum, int numCols) {
 		this.k = k;
 		this.primeNum = primeNum;
 		this.hashfunctions = createRandomHashFunctions();
+		this.numCols = numCols;
 		this.minhash_matrix = new int[k][numCols];
+		this.distance_matrix = new double[numCols][numCols];
 	}
 	
 	public void insertMinHash(int col, ArrayList<Integer> itemlist) {
@@ -33,9 +36,11 @@ public class MinHash {
 			}
 			minhash_matrix[i][col-1] = minimo;
 		}
+		/*
 		for(int i=0; i<k; i++){
 			System.out.println(minhash_matrix[i][col-1]);
 		}
+		*/
 	}
 
 	public int hashFunction(int item, int hash_num){
@@ -52,23 +57,44 @@ public class MinHash {
 		return hashfunctions;
 	}
 
-	public void distancesMinHash(String inputDistances) {
-		/*
-		%matriz de distâncias
-dist_matrix = zeros(nhf,Nu);
-
-for u1=1:Nu
-    for u2 = 1:u1
-        dist_matrix(u1,u2) = 1 - (sum(minhash_matrix(:,u1) == minhash_matrix(:,u2)) /nhf);
-        %a distância de u1 para u2 é igual à de u2 para u1 logo:
-        dist_matrix(u2,u1) = dist_matrix(u1,u2);
-    end
-end
-		*/
+	public void distancesMinHash()
+	{
+		
+		for(int u1=0; u1<numCols; u1++)
+		{
+			for(int u2=1; u2<numCols; u2++)
+			{
+				double sum = 0;
+				double dist = 0;
+				for(int i=0; i<k ; i++)
+				{
+					if(minhash_matrix[i][u1] == minhash_matrix[i][u2])
+						sum += 1;
+				}
+				dist = 1 - (sum / k);
+				//System.out.println(dist);
+				distance_matrix[u1][u2] = dist;
+				distance_matrix[u2][u1] = dist;
+			}
+		}
 	}
 
-	public void findSimilar(String similarSearch) {
+	public void findSimilar(double threshold) {
 		// Print of the similar items, the %% of similarity
+		this.threshold = threshold;
+		for(int u1=0; u1<numCols; u1++)
+		{
+			for(int u2=1; u2<numCols; u2++)
+			{	System.out.println(distance_matrix[u1][u2]);
+				/*
+				if(distance_matrix[u1][u2] < threshold)
+					//System.out.println(u1+" and "+u2+" are a similar pair");
+				else
+					continue;
+					
+				*/
+			}
+		}
 	}
 
 	public void numOfSimilar() {

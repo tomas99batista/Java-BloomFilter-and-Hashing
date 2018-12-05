@@ -18,6 +18,8 @@ public class teste {
         {
             filmes.insertMinHash(entry.getKey(), entry.getValue());
         }
+        filmes.distancesMinHash();
+        filmes.findSimilar(0.4);
 
         /*
         for (Map.Entry<Integer,ArrayList<Integer>> entry : reviewData.entrySet()) {
