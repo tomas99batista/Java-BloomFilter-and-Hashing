@@ -7,14 +7,11 @@ public class MinHash {
 	// Things needed
 	private int k; // Number of hash functions
 	private int primeNum; // Prime Number
-	private int n; // Number of elements in the Filters
-	private double threshold; // Probability of false positives
-	private int countElements; // Count the number of elements
-	//private int prime; // Prime number that will be incremented
+	private int n; // Number of elements in the Filters 
 	private int[] hashfunctions;
 	private int[][] minhash_matrix;
 	private double[][] distance_matrix;
-	private int numCols;
+	private int numCols; // Number of users in the case of the PL07 test, documents in other cases
 
 	public MinHash(int k, int primeNum, int numCols) {
 		this.k = k;
@@ -81,7 +78,6 @@ public class MinHash {
 
 	public void findSimilar(double threshold) {
 		// Print of the similar items, the %% of similarity
-		this.threshold = threshold;
 		for(int u1=0; u1<numCols; u1++)
 		{
 			for(int u2=u1+1; u2<numCols; u2++)

@@ -11,7 +11,7 @@ public class TestEstocastico {
 		new ContadorEstocastico(0.5);
 
 		// Using the file u.data provided to the practical exercises
-		Scanner input = new Scanner(new File("src/project/u.data"));
+		Scanner input = new Scanner(new File("u.data"));
 
 		// Made this counter to know how many words are on the file to compare to the
 		// added to ContadorEstocastico
