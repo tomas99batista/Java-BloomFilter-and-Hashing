@@ -16,11 +16,11 @@ public class TestCountingBloomFilter {
 
 	public static void main(String[] args) throws IOException {
 		// Using the file u.data provided to the practical exercises
+		//Scanner input = new Scanner(new File("u.data"));
 		Scanner input = new Scanner(new File("u.data"));
 
 		while (input.hasNext()) {
 			String word = input.next();
-
 		}
 	}
 }
