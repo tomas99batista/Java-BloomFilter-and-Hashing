@@ -33,9 +33,11 @@ public class Passwords {
 		// Print the number of elements added to the ContadorEstocastico and the total
 		// number of elements
 		ContadorEstocastico.numOfElements();
-		
+
 		
 		//------------------------------------COUNTING BLOOMFILTER--------------------------------------
+		
+				
 		
 	}
 
