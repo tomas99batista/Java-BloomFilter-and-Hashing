@@ -126,8 +126,10 @@ public class CountingBloomFilter {
 		return countElements;
 	}
 
-	// TODO
-	// Clean the CountingBloomFilter
+	//Set all index of countingBloomFilter to 0 to clean
 	public void cleanCountingBF() {
+		for (int i = 0; i < countingBloomFilter.length; i++) {
+			countingBloomFilter[i] = 0;
+		}
 	}
 }
