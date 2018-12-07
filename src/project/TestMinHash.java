@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.TreeMap;
 
-public class testep07 {
+public class TestMinHash {
 
     public static void main(String[] args) throws IOException{
         //ArrayList<String> filelist = new ArrayList();
