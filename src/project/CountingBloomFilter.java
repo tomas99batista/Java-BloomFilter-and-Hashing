@@ -1,15 +1,21 @@
 package project;
 
+import java.util.*;
+
 public class CountingBloomFilter {
 	// TODO cleanCountingBF()
 
 	// Things needed
-	private int[] countingBloomFilter; // The bloom filter itself
-	private int k; // Number of hash functions
-	private int m; // Number of bits in the filter
-	private int n; // Number of elements in the Filters
-	private double fpr; // Probability of false positives
-	private int countElements; // Count the number of elements
+	private static int[] countingBloomFilter; // The bloom filter itself
+	private static List<String> dont_exist = new ArrayList<String>();
+	private static List<String> exist = new ArrayList<String>();
+	private static int dont_exist_count = 0;
+	private static int exist_count = 0;
+	private static int k; // Number of hash functions
+	private static int m; // Number of bits in the filter
+	private static int n; // Number of elements in the Filters
+	private static double fpr; // Probability of false positives
+	private static int countElements; // Count the number of elements
 
 	// -------------------------------------------------
 	// CREDITS: https://hur.st/bloomfilter/
@@ -20,16 +26,16 @@ public class CountingBloomFilter {
 	// -------------------------------------------------
 
 	// Creates the BloomFilter with optimal m and k
-	public CountingBloomFilter(int n, double fpr) {
-		this.n = n;
-		this.fpr = fpr;
+	public static void CreateCountingBloomFilter(int n_arg, double fpr_arg) {
+		n = n_arg;
+		fpr = fpr_arg;
 		m = (int) ((n * Math.log(fpr)) / Math.log(1 / Math.pow(2, Math.log(2))));
 		k = (int) ((m / n) * Math.log(2));
 		countingBloomFilter = new int[m];
 	}
 
 	// Insert the passed arguments on the BloomFilter
-	public void insert(String element_Insert) {
+	public static void insert(String element_Insert) {
 		// Can't add if the BloomFilter is full
 		if (countElements >= m) {
 			System.out.println("Not possible to add, Counting Bloom Filter is full");
@@ -37,10 +43,15 @@ public class CountingBloomFilter {
 		} else {
 			for (int i = 0; i < k; i++) {
 				element_Insert += Integer.toString(i);
-				countingBloomFilter[element_Insert.hashCode() % m] += 1;
+				long hash = element_Insert.hashCode() & 0xffffffffL;
+				countingBloomFilter[(int) ((hash) % m)] += 1;
 			}
 			countElements++;
 		}
+	}
+
+	public static int[] returnArray() {
+		return countingBloomFilter;
 	}
 
 	// Remove one occurrence on the element passed by argument on the CBF
@@ -77,23 +88,32 @@ public class CountingBloomFilter {
 	}
 
 	// Tests if the Bloom Filter contains the argument passed to the function
-	public void contains(String element_Contains) {
+	public static void belongs(String element_Contains_arg) {
 		if (countElements <= 0) {
 			System.out.println("Counting Bloom Filter it is empty");
 			System.exit(0);
-		}
-		int verification = 1;
-		for (int i = 0; i < k; i++) {
-			element_Contains += Integer.toString(i);
-			if (countingBloomFilter[element_Contains.hashCode() % m] == 0) {
-				verification = 0;
-				System.out.format("The Counting Bloom Filter does not contain %s", element_Contains);
-				System.exit(1);
+		} else {
+			String element_Contains = element_Contains_arg;
+			for (int i = 0; i < k; i++) {
+				element_Contains += Integer.toString(i);
+				long hash = element_Contains.hashCode() & 0xffffffffL;
+				if (countingBloomFilter[(int) ((hash) % m)] == 0) {
+					if (!dont_exist.contains(element_Contains_arg)) {
+						dont_exist.add(element_Contains_arg);
+						dont_exist_count++;
+					}
+				}
 			}
+
 		}
-		if (verification == 1) {
-			System.out.format("The Counting Bloom Filter contains %s", element_Contains);
+	}
+
+	public static void print_Dexist() {
+		System.out.println("Passwords that belongs to the 10k list but do not belong on twitter bans:");
+		for (int i = 0; i < dont_exist.size(); i++) {
+			System.out.println(dont_exist.get(i));
 		}
+		System.out.format("TOTAL: %d \n", dont_exist_count);
 	}
 
 	// NOT SURE ABOUT THIS ONE
@@ -126,7 +146,7 @@ public class CountingBloomFilter {
 		return countElements;
 	}
 
-	//Set all index of countingBloomFilter to 0 to clean
+	// Set all index of countingBloomFilter to 0 to clean
 	public void cleanCountingBF() {
 		for (int i = 0; i < countingBloomFilter.length; i++) {
 			countingBloomFilter[i] = 0;

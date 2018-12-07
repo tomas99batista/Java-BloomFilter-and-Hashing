@@ -27,6 +27,8 @@ public class ContadorEstocastico {
 	// This will return the number of elements
 	public static void numOfElements() {
 		elementsAdded = (int) Math.round(countElements / probability);
-		System.out.format("%d elements were added *Contador Estocastico*\n", elementsAdded);
+		System.out.format("%d elements estimated by the Contador Estocastico\n", elementsAdded);
+		System.out.println("Precise Value: 10397 *Not calculated, we know the amount*");
+
 	}
 }
