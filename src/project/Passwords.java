@@ -1,33 +1,20 @@
 package project;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.Scanner;
-
-import sun.nio.ch.IOUtil;
+import java.io.*;
+import java.util.*;
 
 public class Passwords {
-
-	public Passwords() {
-		// TODO Auto-generated constructor stub
-	}
-
 	public static void main(String[] args) throws IOException {
-
 		// ----------------------------FILES----------------
-
 		File file_passwords = new File("src/project/WorstPasswords_10k.txt");
-		Scanner scan_passwords = new Scanner(file_passwords);
 		File file_twitter = new File("src/project/Twitter_Passwords.txt");
-		Scanner scan_twitter = new Scanner(file_twitter);
-
+		
 		// ---------------CONTADOR ESTOCASTICO----------------------
+		Scanner scan_passwords = new Scanner(file_passwords);
+		Scanner scan_twitter = new Scanner(file_twitter);
 		System.out.println("CONTADOR ESTOCASTICO");
-
 		// Probability added to the ContadorEstocastico
 		new ContadorEstocastico(0.5);
-
 		while (scan_passwords.hasNext()) {
 			String word = scan_passwords.next();
 			// Increment the ContadorEstocastico and the count
@@ -42,12 +29,11 @@ public class Passwords {
 		// number of elements
 		ContadorEstocastico.numOfElements();
 		System.out.println("----------------------------------");
+		
 		// --------COUNTING BLOOMFILTER------------------
 		System.out.println("COUNTING BLOOM FILTER");
-
 		Scanner scan_passwordsV2 = new Scanner(file_passwords);
 		Scanner scan_twitterV2 = new Scanner(file_twitter);
-
 		// Sum of the sizes of: WorstPasswords_10k.txt
 		int n_CBF = 10000;
 		// Create the CBF with the number of elements of both files and a fpr of 0.01
@@ -57,9 +43,7 @@ public class Passwords {
 			// Increment the ContadorEstocastico and the count
 			CountingBloomFilter.insert(word);
 		}
-
 		int[] CBF = CountingBloomFilter.returnArray();
-
 		while (scan_twitterV2.hasNext()) {
 			String word = scan_twitterV2.next();
 			for (int i = 0; i < CBF.length; i++) {
@@ -68,8 +52,17 @@ public class Passwords {
 		}
 		CountingBloomFilter.print_Dexist();
 		System.out.println("----------------------------------");
-
-
+		
+		// --------------MINHASH----------------------
+		System.out.println("MinHash");
+		//CODIGO AQUIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+		//CODIGO AQUIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+		//CODIGO AQUIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+		//CODIGO AQUIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+		System.out.println("CODIGO AQUIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII");
+		//CODIGO AQUIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+		//CODIGO AQUIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+		//CODIGO AQUIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+		System.out.println("----------------------------------");
 	}
-
 }
