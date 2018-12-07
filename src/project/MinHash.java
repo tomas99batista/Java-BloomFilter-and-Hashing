@@ -93,4 +93,22 @@ public class MinHash {
 			}
 		}
 	}
+
+	public void findSimilarTranslate(double threshold, Map<Integer,String> fileindexes) {
+		// Print of the similar items, the %% of similarity
+		for(int u1=0; u1<numCols; u1++)
+		{
+			for(int u2=u1+1; u2<numCols; u2++)
+			{	
+				//System.out.println(distance_matrix[u1][u2]);
+			
+				if(distance_matrix[u1][u2] < threshold && distance_matrix[u1][u2] != 0.0){
+					System.out.print(fileindexes.get(u1)+" and "+fileindexes.get(u2)+" are a similar pair - ");
+					System.out.println(distance_matrix[u1][u2]);
+				}
+					
+			
+			}
+		}
+	}
 }
