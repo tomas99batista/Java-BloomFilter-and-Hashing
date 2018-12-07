@@ -66,7 +66,6 @@ public class Passwords {
 				CountingBloomFilter.belongs(word);
 			}
 		}
-
 		CountingBloomFilter.print_Dexist();
 		System.out.println("----------------------------------");
 

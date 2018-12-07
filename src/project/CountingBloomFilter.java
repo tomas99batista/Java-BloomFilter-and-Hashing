@@ -110,10 +110,10 @@ public class CountingBloomFilter {
 
 	public static void print_Dexist() {
 		System.out.println("Passwords that belongs to the 10k list but do not belong on twitter bans:");
+		System.out.format("TOTAL: %d \n", dont_exist_count);
 		for (int i = 0; i < dont_exist.size(); i++) {
 			System.out.println(dont_exist.get(i));
 		}
-		System.out.format("TOTAL: %d \n", dont_exist_count);
 	}
 
 	// NOT SURE ABOUT THIS ONE
