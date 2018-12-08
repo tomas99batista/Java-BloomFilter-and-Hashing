@@ -1,16 +1,16 @@
 package project;
 
 import java.util.*;
+import java.util.Map.Entry;
 
 public class CountingBloomFilter {
-	// TODO cleanCountingBF()
-
 	// Things needed
 	private static int[] countingBloomFilter; // The bloom filter itself
-	private static List<String> dont_exist = new ArrayList<String>();
-	private static List<String> exist = new ArrayList<String>();
-	private static int dont_exist_count = 0;
-	private static int exist_count = 0;
+	private static List<String> dont_exist = new ArrayList<String>();// To store the ones that do not exist
+	private static List<String> exist = new ArrayList<String>(); // To store the ones that exist
+	static Map<String, Integer> freq = new HashMap<String, Integer>(); // To store the number of occurrences
+	private static int dont_exist_count = 0; // Counts the ones that do not exist
+	private static int exist_count = 0; // Counts the existing
 	private static int k; // Number of hash functions
 	private static int m; // Number of bits in the filter
 	private static int n; // Number of elements in the Filters
@@ -50,43 +50,6 @@ public class CountingBloomFilter {
 		}
 	}
 
-	public static int[] returnArray() {
-		return countingBloomFilter;
-	}
-
-	// Remove one occurrence on the element passed by argument on the CBF
-	public void removeOccurence(String element_RemoveOcc) {
-		// Can't remove if the BloomFilter is empty
-		if (countElements <= 0) {
-			System.out.println("Not possible to remove, Counting Bloom Filter is empty");
-			System.exit(0);
-		} else {
-			for (int i = 0; i < k; i++) {
-				element_RemoveOcc += Integer.toString(i);
-				// Verify if it is not at zero
-				if (countingBloomFilter[element_RemoveOcc.hashCode() % m] > 0) {
-					countingBloomFilter[element_RemoveOcc.hashCode() % m] -= 1;
-				}
-			}
-		}
-		countElements--;
-	}
-
-	// Remove the Element passed by argument on the BloomFilter
-	public void removeElement(String element_Remove_Element) {
-		// Can't remove if the BloomFilter is empty
-		if (countElements <= 0) {
-			System.out.println("Not possible to remove, Counting Bloom Filter is empty");
-			System.exit(0);
-		} else {
-			for (int i = 0; i < k; i++) {
-				element_Remove_Element += Integer.toString(i);
-				countingBloomFilter[element_Remove_Element.hashCode() % m] = 0;
-			}
-		}
-		countElements--;
-	}
-
 	// Tests if the Bloom Filter contains the argument passed to the function
 	public static void belongs(String element_Contains_arg) {
 		if (countElements <= 0) {
@@ -108,6 +71,56 @@ public class CountingBloomFilter {
 		}
 	}
 
+	// Version 2, because of time optimization
+	// Tests if the Bloom Filter contains the argument passed to the function
+	public static void belongsV2(String element_Contains_arg) {
+		if (countElements <= 0) {
+			System.out.println("Counting Bloom Filter it is empty");
+			System.exit(0);
+		} else {
+			String element_Contains = element_Contains_arg;
+			for (int i = 0; i < k; i++) {
+				element_Contains += Integer.toString(i);
+				long hash = element_Contains.hashCode() & 0xffffffffL;
+				if (countingBloomFilter[(int) ((hash) % m)] == 1) {
+					if (!exist.contains(element_Contains_arg)) {
+						exist.add(element_Contains_arg);
+						exist_count++;
+					}
+				}
+			}
+		}
+	}
+
+	// Needed this to development, returning the size so I can iterate over it with
+	// a for
+	public static int[] returnArray() {
+		return countingBloomFilter;
+	}
+
+	// Remove one occurrence on the element passed by argument on the CBF
+	public void removeOccurrence(String element_RemoveOccarg) {
+		// Can't remove if the BloomFilter is empty
+		if (countElements <= 0) {
+			System.out.println("Not possible to remove, Counting Bloom Filter is empty");
+			System.exit(0);
+		} else {
+			String element_RemoveOcc = element_RemoveOccarg;
+			for (int i = 0; i < k; i++) {
+				element_RemoveOcc += Integer.toString(i);
+				long hash = element_RemoveOcc.hashCode() & 0xffffffffL;
+				if (countingBloomFilter[(int) ((hash) % m)] > 0) {
+					countingBloomFilter[(int) ((hash) % m)] -= 1;
+					// If after the removal of the occurrence it does not belong anymore to the CBF,
+					// decrements the countElements
+					if (countingBloomFilter[(int) ((hash) % m)] == 0) {
+						countElements--;
+					}
+				}
+			}
+		}
+	}
+
 	// Print the ones that belongs to the 10k most common passwords but are not
 	// banned by twitter
 	public static void print_Dexist() {
@@ -122,42 +135,59 @@ public class CountingBloomFilter {
 		System.out.format("\n%d passwords out of the 370 banned by Twitter aren't on the list of the 10.000"
 				+ " most common passwords.\n", passwords_not);
 
+	// Remove the Element passed by argument on the BloomFilter
+	public void removeElement(String element_Remove_Elementarg) {
+		// Can't remove if the BloomFilter is empty
+		if (countElements <= 0) {
+			System.out.println("Not possible to remove, Counting Bloom Filter is empty");
+			System.exit(0);
+		} else {
+			String element_Remove_Element = element_Remove_Elementarg;
+			for (int i = 0; i < k; i++) {
+				element_Remove_Element += Integer.toString(i);
+				long hash = element_Remove_Element.hashCode() & 0xffffffffL;
+				countingBloomFilter[(int) ((hash) % m)] = 0;
+			}
+		}
+		countElements--;
 	}
 
-	// NOT SURE ABOUT THIS ONE
-	// Tests if the Bloom Filter contains the argument passed to the function
-	public void numOccurences(String element_numOccurences) {
+	// Tests if the CBF contains the argument passed to the function and
+	// give the number of Occurrences
+	public static void numOccurences(String element_numOccurencesarg) {
 		if (countElements <= 0) {
 			System.out.println("Counting Bloom Filter it is empty");
 			System.exit(0);
 		}
-		int verification = 1;
-		int occurences = 0;
+		String element_numOccurences = element_numOccurencesarg;
 		for (int i = 0; i < k; i++) {
 			element_numOccurences += Integer.toString(i);
-			if (countingBloomFilter[element_numOccurences.hashCode() % m] == 0) {
-				verification = 0;
-				System.out.format("The Counting Bloom Filter does not contain %s", element_numOccurences);
-				System.exit(1);
-			} else {
-				// NOT SURE ABOUT THIS VVVV
-				occurences += 1;
+			long hash = element_numOccurences.hashCode() & 0xffffffffL;
+			if (countingBloomFilter[(int) ((hash) % m)] == 1) {
+				int count = freq.containsKey(element_numOccurencesarg) ? freq.get(element_numOccurencesarg) : 0;
+				freq.put(element_numOccurencesarg, count + 1);
 			}
-		}
-		if (verification == 1) {
-			System.out.format("The Counting Bloom Filter contains %s %d times", element_numOccurences, occurences);
 		}
 	}
 
-	// Give the number of elements added
-	public int numOfElements() {
+	// Give the number of elements added to the CBF
+	public static int numOfElements() {
 		return countElements;
 	}
 
 	// Set all index of countingBloomFilter to 0 to clean
-	public void cleanCountingBF() {
+	public static void cleanCountingBF() {
 		for (int i = 0; i < countingBloomFilter.length; i++) {
 			countingBloomFilter[i] = 0;
 		}
+	}
+
+	// Print the ones that exists on the CBF
+	public static void print_exist() {
+		for (Entry<String, Integer> entry : freq.entrySet()) {
+			System.out.format("STRING: %s | OCCURRENCES: %d\n", entry.getKey(), entry.getValue());
+		}
+		System.out.format("\nRandom Strings Generated that are on the CBF: %d\n", exist_count);
+
 	}
 }

@@ -1,26 +1,55 @@
 package project;
 
 import java.io.*;
-import java.util.Scanner;
+import java.util.Random;
 
 public class TestCountingBloomFilter {
-	// OPTIONS:
-	// CountingBloomFilter(int n, double fpr)
-	// public void insert(String element_Insert)
-	// public void removeOccurence(String element_RemoveOcc)
-	// public void removeElement(String element_Remove_Element)
-	// public void contains(String element_Contains)
-	// public void numOccurences(String element_numOccurences)
-	// public int numOfElements()
-	// public void cleanCountingBF()
+	private static final String CHAR_LIST = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	
+	//Generate random strings
+	public static String GenRandString() {
+		StringBuffer randStr = new StringBuffer();
+		for (int i = 0; i < 40; i++) {
+			int number = getRandomNumber();
+			char ch = CHAR_LIST.charAt(number);
+			randStr.append(ch);
+		}
+		return randStr.toString();
+	}
+
+	private static int getRandomNumber() {
+		int randomInt = 0;
+		Random randomGenerator = new Random();
+		randomInt = randomGenerator.nextInt(CHAR_LIST.length());
+		if (randomInt - 1 == -1) {
+			return randomInt;
+		} else {
+			return randomInt - 1;
+		}
+	}
 
 	public static void main(String[] args) throws IOException {
-		// Using the file u.data provided to the practical exercises
-		//Scanner input = new Scanner(new File("u.data"));
-		Scanner input = new Scanner(new File("u.data"));
+		// generar 2o conjunto de 10k rand strings e comparar presença no count bloom f
+		CountingBloomFilter.CreateCountingBloomFilter(10000, 0.3);
 
-		while (input.hasNext()) {
-			String word = input.next();
+		// Inserting 10k random Strings with 40 chars on the CBF
+		for (int i = 0; i < 10000; i++) {
+			String word = GenRandString();
+			CountingBloomFilter.insert(word);
 		}
+		// With another 10k random Strings with 40 chars test if they are on the CBF
+		for (int i = 0; i < 10000; i++) {
+			String word = GenRandString();
+			CountingBloomFilter.belongsV2(word);
+			CountingBloomFilter.numOccurences(word);
+		}
+
+		CountingBloomFilter.print_exist();
+
+		System.out.format("\nThere are %d elements on the CBF", CountingBloomFilter.numOfElements());
+
+		// Set all the CBF to 0's
+		CountingBloomFilter.cleanCountingBF();
+
 	}
 }
