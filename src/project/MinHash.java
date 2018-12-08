@@ -102,7 +102,7 @@ public class MinHash {
 				//System.out.println(distance_matrix[u1][u2]);
 			
 				if(distance_matrix[u1][u2] < threshold && distance_matrix[u1][u2] != 0.0){
-					System.out.print(fileindexes.get(u1)+" and "+fileindexes.get(u2)+" are a similar pair - ");
+					System.out.print(fileindexes.get(u1).split("/")[2]+" and "+fileindexes.get(u2).split("/")[2]+" are a similar pair - ");
 					System.out.println(distance_matrix[u1][u2]);
 				}
 					

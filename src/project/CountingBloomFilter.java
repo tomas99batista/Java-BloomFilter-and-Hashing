@@ -121,6 +121,21 @@ public class CountingBloomFilter {
 		}
 	}
 
+	// Print the ones that belongs to the 10k most common passwords but are not
+	// banned by twitter
+	public static void print_Dexist() {
+		System.out.println("Passwords that aren't on the 10.000 most common passwords list but are banned by twitter:");
+		for (int i = 0; i < dont_exist.size(); i++) {
+			System.out.print(">");
+			System.out.println(dont_exist.get(i));
+		}
+		System.out.format("TOTAL: %d \n", dont_exist_count);
+		//370 are the number of passwords banned by twitter
+		int passwords_not = 370 - dont_exist_count;
+		System.out.format("\n%d passwords out of the 370 banned by Twitter aren't on the list of the 10.000"
+				+ " most common passwords.\n", passwords_not);
+	}
+
 	// Remove the Element passed by argument on the BloomFilter
 	public void removeElement(String element_Remove_Elementarg) {
 		// Can't remove if the BloomFilter is empty
@@ -174,23 +189,6 @@ public class CountingBloomFilter {
 			System.out.format("STRING: %s | OCCURRENCES: %d\n", entry.getKey(), entry.getValue());
 		}
 		System.out.format("\nRandom Strings Generated that are on the CBF: %d\n", exist_count);
-
-	}
-
-	// Print the ones that don't exist on the CBF
-	public static void print_Dexist() {
-		// Print the ones that belongs to the 10k most common passwords but are not
-		// banned by twitter
-		System.out.println("Passwords that are banned by Twitter but do not belong to the 10k most common passwords file:");
-		for (int i = 0; i < dont_exist.size(); i++) {
-			System.out.print(">");
-			System.out.println(dont_exist.get(i));
-		}
-		System.out.format("TOTAL: %d \n", dont_exist_count);
-		// 370 are the number of passwords banned by twitter
-		int passwords_not = 370 - dont_exist_count;
-		System.out.format("\n%d passwords of 370 banned by Twitter are on the 10k most common passwords file!!!\n",
-				passwords_not);
 
 	}
 }
