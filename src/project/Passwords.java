@@ -22,7 +22,8 @@ public class Passwords {
 			System.out.println("	are on the file \"WorstPasswords_10k\" but are not on the list of the 370 \n"
 					+ "	passwords banned by Twitter\n");
 			System.out.println("3: MinHash");
-			System.out.println("	TODOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO\n");
+			System.out.println("	Compares between a given list of leaked password files and returns "
+					+ "which ones are similar, according to a given threshold\n");
 			System.out.println("0: Exit");
 			@SuppressWarnings("resource")
 			Scanner reader = new Scanner(System.in); // Reading from System.in

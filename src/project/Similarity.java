@@ -13,12 +13,6 @@ public class Similarity {
             filelist.add(files.nextLine());
         }
         files.close();
-        for(String file : filelist){
-            File f = new File(file);
-            if(f.isFile()){
-                System.out.println("dab");
-            }
-        }
 
         int nfiles = filelist.size();   
         MinHash passwordfiles = new MinHash(200, 10007, nfiles);

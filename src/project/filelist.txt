@@ -1,3 +1,5 @@
 src/project/Lizard-Squad.txt
 src/project/myspace.txt
 src/project/porn-unknown.txt
+src/project/faithwriters.txt
+src/project/rockyou-50.txt

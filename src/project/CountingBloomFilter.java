@@ -134,6 +134,7 @@ public class CountingBloomFilter {
 		int passwords_not = 370 - dont_exist_count;
 		System.out.format("\n%d passwords out of the 370 banned by Twitter aren't on the list of the 10.000"
 				+ " most common passwords.\n", passwords_not);
+	}
 
 	// Remove the Element passed by argument on the BloomFilter
 	public void removeElement(String element_Remove_Elementarg) {
