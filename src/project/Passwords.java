@@ -22,12 +22,12 @@ public class Passwords {
 			System.out.println("	are on the file \"WorstPasswords_10k\" but are not on the list of the 370 \n"
 					+ "	passwords banned by Twitter\n");
 			System.out.println("3: MinHash");
-			System.out.println("	Compares between a given list of leaked password files and returns "
-					+ "which ones are similar, according to a given threshold\n");
+			System.out.println("	Compares between a given list of leaked password files and returns\n "
+					+ "	which ones are similar, according to a given threshold\n");
 			System.out.println("0: Exit");
 			@SuppressWarnings("resource")
 			Scanner reader = new Scanner(System.in); // Reading from System.in
-			System.out.print("Opção? ");
+			System.out.print("Option? ");
 			n = reader.nextInt();
 			System.out.print("\n");
 			switch (n) {
@@ -121,55 +121,52 @@ public class Passwords {
 		System.out.println("------------------------------------------------");
 		System.out.println("MINHASH\n");
 
-		// CODIGO AQUIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
-		ArrayList<String> filelist = new ArrayList();
-        Scanner files = new Scanner(new FileReader("src/project/filelist.txt"));
-        while(files.hasNext()){
-            filelist.add(files.nextLine());
-        }
-        files.close();
+		ArrayList<String> filelist = new ArrayList<String>();
+		Scanner files = new Scanner(new FileReader("src/project/filelist.txt"));
+		while (files.hasNext()) {
+			filelist.add(files.nextLine());
+		}
+		files.close();
 
-        int nfiles = filelist.size();   
-        MinHash passwordfiles = new MinHash(200, 10007, nfiles);
+		int nfiles = filelist.size();
+		MinHash passwordfiles = new MinHash(200, 10007, nfiles);
 
-        Map<Integer,String> fileindexes = new TreeMap<>();
-        for(String filenames : filelist){
-            Map<Integer,ArrayList<Integer>> PasswordData = processPasswordFile(filenames,fileindexes);
+		Map<Integer, String> fileindexes = new TreeMap<>();
+		for (String filenames : filelist) {
+			Map<Integer, ArrayList<Integer>> PasswordData = processPasswordFile(filenames, fileindexes);
 
-            for (Map.Entry<Integer, ArrayList<Integer>> entry : PasswordData.entrySet())
-            {
-                passwordfiles.insertMinHash(entry.getKey()+1, entry.getValue());
-            }
-        }
-        passwordfiles.distancesMinHash();
-        passwordfiles.findSimilarTranslate(0.65,fileindexes);
+			for (Map.Entry<Integer, ArrayList<Integer>> entry : PasswordData.entrySet()) {
+				passwordfiles.insertMinHash(entry.getKey() + 1, entry.getValue());
+			}
+		}
+		passwordfiles.distancesMinHash();
+		passwordfiles.findSimilarTranslate(0.65, fileindexes);
 
-        /*
-        for (Map.Entry<Integer,ArrayList<Integer>> entry : PasswordData.entrySet()) {
-            System.out.println(entry.getKey() + ": " + entry.getValue());
-       }
-       */
+		/*
+		 * for (Map.Entry<Integer,ArrayList<Integer>> entry : PasswordData.entrySet()) {
+		 * System.out.println(entry.getKey() + ": " + entry.getValue()); }
+		 */
 
 		System.out.println("------------------------------------------------\n");
 	}
-	
-	public static Map<Integer,ArrayList<Integer>> processPasswordFile(String filename, Map<Integer,String> fileindexes) throws IOException{
-        int index = fileindexes.size();
-        fileindexes.put(index, filename);
-        Scanner read = new Scanner(new FileReader(filename));
-        Map<Integer,ArrayList<Integer>> PasswordData = new TreeMap<>();
-        while(read.hasNext()){
-            String password = read.nextLine();
-            int passhashcode = password.hashCode();
-            if(!PasswordData.containsKey(index)){
-                PasswordData.put(index,new ArrayList<>());
-                PasswordData.get(index).add(passhashcode);
-            }
-            else{
-                PasswordData.get(index).add(passhashcode);
-            }
-        }
-        read.close();
-        return PasswordData;
-    }
+
+	public static Map<Integer, ArrayList<Integer>> processPasswordFile(String filename,
+			Map<Integer, String> fileindexes) throws IOException {
+		int index = fileindexes.size();
+		fileindexes.put(index, filename);
+		Scanner read = new Scanner(new FileReader(filename));
+		Map<Integer, ArrayList<Integer>> PasswordData = new TreeMap<>();
+		while (read.hasNext()) {
+			String password = read.nextLine();
+			int passhashcode = password.hashCode();
+			if (!PasswordData.containsKey(index)) {
+				PasswordData.put(index, new ArrayList<>());
+				PasswordData.get(index).add(passhashcode);
+			} else {
+				PasswordData.get(index).add(passhashcode);
+			}
+		}
+		read.close();
+		return PasswordData;
+	}
 }
