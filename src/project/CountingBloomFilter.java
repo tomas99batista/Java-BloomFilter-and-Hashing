@@ -111,7 +111,7 @@ public class CountingBloomFilter {
 	// Print the ones that belongs to the 10k most common passwords but are not
 	// banned by twitter
 	public static void print_Dexist() {
-		System.out.println("Passwords that are on the 10k most common passwords but are not banned by twitter:");
+		System.out.println("Passwords that aren't on the 10.000 most common passwords list but are banned by twitter:");
 		for (int i = 0; i < dont_exist.size(); i++) {
 			System.out.print(">");
 			System.out.println(dont_exist.get(i));
@@ -119,7 +119,8 @@ public class CountingBloomFilter {
 		System.out.format("TOTAL: %d \n", dont_exist_count);
 		//370 are the number of passwords banned by twitter
 		int passwords_not = 370 - dont_exist_count;
-		System.out.format("\n%d passwords of 370 banned by Twitter are on the 10k most common password!!!\n", passwords_not);
+		System.out.format("\n%d passwords out of the 370 banned by Twitter aren't on the list of the 10.000"
+				+ " most common passwords.\n", passwords_not);
 
 	}
 

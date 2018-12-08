@@ -12,7 +12,7 @@ public class Similarity {
     public static void main(String[] args) throws IOException{
         //isto aqui lê os ficheiros a ser abertos para um arraylist
         ArrayList<String> filelist = new ArrayList();
-        Scanner files = new Scanner(new FileReader("filelist.txt"));
+        Scanner files = new Scanner(new FileReader("src/project/filelist.txt"));
         while(files.hasNext()){
             filelist.add(files.nextLine());
         }
