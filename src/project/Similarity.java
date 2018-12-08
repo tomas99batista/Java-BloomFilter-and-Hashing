@@ -1,17 +1,13 @@
 package project;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.Scanner;
-import java.util.TreeMap;
 import java.util.*;
 
 public class Similarity {
 
     public static void main(String[] args) throws IOException{
         //isto aqui lê os ficheiros a ser abertos para um arraylist
-        ArrayList<String> filelist = new ArrayList();
+        ArrayList<String> filelist = new ArrayList<String>();
         Scanner files = new Scanner(new FileReader("filelist.txt"));
         while(files.hasNext()){
             filelist.add(files.nextLine());

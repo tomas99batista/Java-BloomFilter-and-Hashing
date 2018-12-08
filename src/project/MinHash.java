@@ -7,7 +7,6 @@ public class MinHash {
 	// Things needed
 	private int k; // Number of hash functions
 	private int primeNum; // Prime Number
-	private int n; // Number of elements in the Filters 
 	private int[] hashfunctions;
 	private int[][] minhash_matrix;
 	private double[][] distance_matrix;

@@ -7,7 +7,7 @@ public class Passwords {
 	// CREDITS: https://github.com/danielmiessler/SecLists
 	// --------------------MAIN------------------
 	public static void main(String[] args) throws IOException {
-		// Calls the menu function, this calls the 3 options
+		// Calls the menu function, which function calls the 3 options
 		menu();
 	}
 
