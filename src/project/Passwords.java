@@ -75,6 +75,7 @@ public class Passwords {
 		// number of elements
 		ContadorEstocastico.numOfElements();
 		System.out.println("------------------------------------------------\n");
+		ContadorEstocastico.cleanContadorEstocastico();
 		scan_passwords.close();
 		scan_twitter.close();
 	}

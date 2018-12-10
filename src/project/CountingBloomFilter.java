@@ -130,10 +130,19 @@ public class CountingBloomFilter {
 			System.out.println(dont_exist.get(i));
 		}
 		System.out.format("TOTAL: %d \n", dont_exist_count);
-		//370 are the number of passwords banned by twitter
+		// 370 are the number of passwords banned by twitter
 		int passwords_not = 370 - dont_exist_count;
 		System.out.format("\n%d passwords out of the 370 banned by Twitter aren't on the list of the 10.000"
 				+ " most common passwords.\n", passwords_not);
+	}
+
+	// Print the ones that exists on the CBF
+	public static void print_exist() {
+		for (Entry<String, Integer> entry : freq.entrySet()) {
+			System.out.format("STRING: %s | OCCURRENCES: %d\n", entry.getKey(), entry.getValue());
+		}
+		System.out.format("\nRandom Strings Generated that are on the CBF: %d\n", exist_count);
+
 	}
 
 	// Remove the Element passed by argument on the BloomFilter
@@ -183,12 +192,4 @@ public class CountingBloomFilter {
 		}
 	}
 
-	// Print the ones that exists on the CBF
-	public static void print_exist() {
-		for (Entry<String, Integer> entry : freq.entrySet()) {
-			System.out.format("STRING: %s | OCCURRENCES: %d\n", entry.getKey(), entry.getValue());
-		}
-		System.out.format("\nRandom Strings Generated that are on the CBF: %d\n", exist_count);
-
-	}
 }

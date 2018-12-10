@@ -29,7 +29,6 @@ public class TestCountingBloomFilter {
 	}
 
 	public static void main(String[] args) throws IOException {
-		// generar 2o conjunto de 10k rand strings e comparar presença no count bloom f
 		CountingBloomFilter.CreateCountingBloomFilter(10000, 0.3);
 
 		// Inserting 10k random Strings with 40 chars on the CBF

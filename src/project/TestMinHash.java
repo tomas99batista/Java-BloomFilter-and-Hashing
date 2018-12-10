@@ -10,7 +10,7 @@ public class TestMinHash {
 
     public static void main(String[] args) throws IOException{
         //ArrayList<String> filelist = new ArrayList();
-        Map<Integer,ArrayList<Integer>> reviewData = readReviewData("u.data");
+        Map<Integer,ArrayList<Integer>> reviewData = readReviewData("src/project/u.data");
 //        Map<Integer,ArrayList<Integer>> reviewData = readReviewData("u.data");
         //MinHash teste = new MinHash(100,10007,3);
         int nusers = reviewData.size();   
